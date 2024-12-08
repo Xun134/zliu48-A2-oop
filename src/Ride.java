@@ -55,7 +55,92 @@ public class Ride implements RideInterface {
     public int getSizeOfVisitorQueue() {
         return visitorQueue.size();
     }
-    
+
+    // Queue-related methods
+    @Override
+    public void addVisitorToQueue(Visitor visitor) {
+        visitorQueue.add(visitor);
+        System.out.printf("%s has joined the queue for %s.%n", visitor.getName(), rideName);
+    }
+
+    @Override
+    public void removeVisitorFromQueue() {
+        Visitor removedVisitor = visitorQueue.poll();
+        if (removedVisitor != null) {
+            System.out.printf("%s has been removed from the queue for %s.%n", removedVisitor.getName(), rideName);
+        } else {
+            System.out.printf("The queue for %s is empty. No visitor to remove.%n", rideName);
+        }
+    }
+
+    @Override
+    public void printQueue() {
+        if (visitorQueue.isEmpty()) {
+            System.out.printf("The queue for %s is currently empty.%n", rideName);
+        } else {
+            System.out.printf("Visitors in the queue for %s:%n", rideName);
+            visitorQueue.forEach(visitor ->
+                    System.out.printf("- %s (Age: %d)%n", visitor.getName(), visitor.getAge())
+            );
+        }
+    }
+
+    @Override
+    public void runOneCycle() {
+        if (operator == null) {
+            System.out.printf("The ride %s cannot be run because no operator is assigned.%n", rideName);
+            return;
+        }
+
+        if (visitorQueue.isEmpty()) {
+            System.out.printf("The ride %s cannot be run because the queue is empty.%n", rideName);
+            return;
+        }
+
+        int riders = 0;
+        System.out.printf("Running one cycle for %s...%n", rideName);
+        while (riders < maxRiders && !visitorQueue.isEmpty()) {
+            Visitor visitor = visitorQueue.poll();
+            if (visitor != null) {
+                addVisitorToHistory(visitor);
+                System.out.printf("%s is enjoying the ride %s.%n", visitor.getName(), rideName);
+                riders++;
+            }
+        }
+
+        numOfCycles++;
+        System.out.printf("Cycle completed. Total cycles run for %s: %d%n", rideName, numOfCycles);
+    }
+
+    @Override
+    public void addVisitorToHistory(Visitor visitor) {
+        rideHistory.add(visitor);
+        System.out.printf("%s has been added to the ride history for %s.%n", visitor.getName(), rideName);
+    }
+
+    @Override
+    public boolean checkVisitorFromHistory(Visitor visitor) {
+        boolean found = rideHistory.contains(visitor);
+        System.out.printf("%s is %sin the ride history for %s.%n", visitor.getName(), found ? "" : "not ", rideName);
+        return found;
+    }
+
+    @Override
+    public int numberOfVisitors() {
+        return rideHistory.size();
+    }
+
+    @Override
+    public void printRideHistory() {
+        if (rideHistory.isEmpty()) {
+            System.out.printf("No visitors have taken the ride %s yet.%n", rideName);
+        } else {
+            System.out.printf("Ride history for %s:%n", rideName);
+            rideHistory.forEach(visitor ->
+                    System.out.printf("- %s (Age: %d)%n", visitor.getName(), visitor.getAge())
+            );
+        }
+    }
 
 
 
