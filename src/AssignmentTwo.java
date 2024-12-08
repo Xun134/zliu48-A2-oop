@@ -59,7 +59,29 @@ public class AssignmentTwo {
     }
 
     public void partFourB() {
-       
+        Employee operator = new Employee("Bob", 40, "Male", "E102", "Ride Operator");
+        Ride thunderStorm = new Ride("Thunderstorm", 4, operator);
+
+        Visitor[] visitors = {
+                new Visitor("Tom", 25, "Male", "V101", 1),
+                new Visitor("Sherly", 22, "Female", "V102", 2),
+                new Visitor("Ben", 28, "Male", "V103", 3),
+                new Visitor("David", 24, "Female", "V104", 4),
+                new Visitor("Jack", 30, "Male", "V105", 5),
+                new Visitor("Lee", 30, "Female", "V106", 5)
+        };
+
+        for (Visitor visitor : visitors) {
+            thunderStorm.addVisitorToHistory(visitor);
+        }
+
+        System.out.println("Before sorting:");
+        thunderStorm.printRideHistory();
+
+        thunderStorm.sortRideHistory();
+
+        System.out.println("After sorting:");
+        thunderStorm.printRideHistory();
     }
 
     public void partFive() {
