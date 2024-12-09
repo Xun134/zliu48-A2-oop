@@ -119,11 +119,32 @@ public class AssignmentTwo {
     }
 
     public void partSix() {
-        
+        Employee operator = new Employee("Alice", 35, "Female", "E101", "Ride Operator");
+        Ride rollerCoaster = new Ride("Roller Coaster", 2, operator);
+
+        Visitor[] visitors = {
+                new Visitor("Jack", 25, "Male", "V101", 111),
+                new Visitor("Sharon", 22, "Female", "V102", 222),
+                new Visitor("Benny", 28, "Male", "V103", 333),
+                new Visitor("Leo", 24, "Female", "V104", 444),
+                new Visitor("Nehemia", 30, "Male", "V105", 555)
+        };
+
+        for (Visitor visitor : visitors) {
+            rollerCoaster.addVisitorToHistory(visitor);
+        }
+
+        String filename = "file.csv";
+        rollerCoaster.exportRideHistory(filename);
     }
 
     public void partSeven() {
+        Employee operator = new Employee("Alice", 35, "Female", "E101", "Ride Operator");
+        Ride rollerCoaster = new Ride("Roller Coaster", 2, operator);
+        rollerCoaster.importRideHistory("file.csv");
 
+        System.out.println("The number of Visitors: " + rollerCoaster.getSizeOfVisitorQueue() + "\n");
+        System.out.println("All Visitors:");
+        rollerCoaster.printQueue();
     }
-
 }

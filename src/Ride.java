@@ -142,6 +142,50 @@ public class Ride implements RideInterface {
         }
     }
 
+    public void sortRideHistory() {
+        rideHistory.sort(new VisitorComparator());
+        System.out.println("Ride history has been sorted.");
+    }
 
+    public void exportRideHistory(String filename) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            rideHistory.forEach(visitor -> {
+                try {
+                    writer.write(String.format("%s,%d,%s,%s,%d%n", visitor.getName(), visitor.getAge(),
+                            visitor.getGender(), visitor.getTicketId(), visitor.getMembershipId()));
+                } catch (IOException e) {
+                    System.out.println("An error occurred while exporting ride history: " + e.getMessage());
+                }
+            });
+            System.out.printf("Ride history has been successfully exported to %s%n", filename);
+        } catch (IOException e) {
+            System.out.println("An error occurred while exporting ride history: " + e.getMessage());
+        }
+    }
 
+    public void importRideHistory(String filename) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                if (data.length == 5) {
+                    String name = data[0];
+                    int age = Integer.parseInt(data[1]);
+                    String gender = data[2];
+                    String ticketId = data[3];
+                    int membershipId = Integer.parseInt(data[4]);
+
+                    Visitor visitor = new Visitor(name, age, gender, ticketId, membershipId);
+                    visitorQueue.add(visitor);
+                }
+            }
+            System.out.printf("Ride history has been successfully imported from %s%n", filename);
+        } catch (IOException e) {
+            System.out.println("An error occurred while importing ride history: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format in file: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("An unexpected error occurred: " + e.getMessage());
+        }
+    }
 }
