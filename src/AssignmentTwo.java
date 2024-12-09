@@ -85,7 +85,37 @@ public class AssignmentTwo {
     }
 
     public void partFive() {
+        Employee operator = new Employee("Bob", 40, "Male", "E102", "Ride Operator");
+        Ride rollerCoaster = new Ride("Roller Coaster", 2, operator);
 
+        Visitor[] visitors = {
+                new Visitor("Tom", 25, "Male", "V101", 000),
+                new Visitor("Sherly", 22, "Female", "V102", 999),
+                new Visitor("Ben", 28, "Male", "V103", 6777),
+                new Visitor("David", 24, "Female", "V104", 868),
+                new Visitor("Jack", 30, "Male", "V105", 456654),
+                new Visitor("Lee", 30, "Female", "V106", 645645),
+                new Visitor("Jack", 25, "Male", "V101", 654654),
+                new Visitor("Sharon", 22, "Female", "V102", 65465463),
+                new Visitor("Benny", 28, "Male", "V103", 635634),
+                new Visitor("Leo", 24, "Female", "V104", 63463546),
+                new Visitor("Nehemia", 30, "Male", "V105", 634565436)
+        };
+
+        for (Visitor visitor : visitors) {
+            rollerCoaster.addVisitorToQueue(visitor);
+        }
+
+        System.out.println("\nVisitors in queue before the cycle:");
+        rollerCoaster.printQueue();
+
+        rollerCoaster.runOneCycle();
+
+        System.out.println("\nVisitors in queue after the cycle:");
+        rollerCoaster.printQueue();
+
+        System.out.println("\nRide history:");
+        rollerCoaster.printRideHistory();
     }
 
     public void partSix() {
